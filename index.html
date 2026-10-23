@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tech Labs · Website Questionnaire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#EDF1FB;--fg:#0B1230;--mut:#4B5886;--card:#fff;--line:#C5D0EE;--acc:#1F3FD1;--accfg:#fff;--grid:rgba(31,63,209,.08);
+--disp:"Bricolage Grotesque","Trebuchet MS",sans-serif;--body:"Instrument Sans",system-ui,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0B1230;--fg:#EAF0FF;--mut:#9AA8DB;--card:#121C45;--line:#2A3A7A;--acc:#FFC933;--accfg:#0B1230;--grid:rgba(255,255,255,.05)}}
+:root[data-theme="dark"]{--bg:#0B1230;--fg:#EAF0FF;--mut:#9AA8DB;--card:#121C45;--line:#2A3A7A;--acc:#FFC933;--accfg:#0B1230;--grid:rgba(255,255,255,.05)}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 1rem/1.6 var(--body);
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:36px 36px}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px}
+header{display:flex;justify-content:space-between;align-items:center;padding:20px 0}
+.brand{font:800 1.25rem var(--disp);letter-spacing:-.01em}
+.btn{font:600 .9rem var(--body);border:1.5px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:9px 18px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{border-color:var(--acc)}
+.btn.pri{background:var(--acc);color:var(--accfg);border-color:var(--acc)}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+h1{font:800 clamp(2.4rem,8vw,4.6rem)/1 var(--disp);letter-spacing:-.035em;margin:36px 0 18px}
+.lead{color:var(--mut);max-width:52ch;margin:0 0 32px;font-size:1.1rem}
+.rail{display:flex;gap:6px;margin-bottom:14px}
+.rail button{flex:1;height:8px;border:0;border-radius:4px;background:var(--line);cursor:pointer;padding:0}
+.rail button.done{background:var(--acc)}
+.rail button.on{background:var(--acc);box-shadow:0 0 0 3px var(--line)}
+.meta{color:var(--mut);font-size:.9rem;margin-bottom:6px}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:20px;padding:28px 24px;margin-bottom:28px}
+h2{font:800 1.9rem/1.1 var(--disp);margin:0 0 6px;letter-spacing:-.02em}
+.desc{color:var(--mut);margin:0 0 24px}
+.f{margin-bottom:22px}
+.f label,.f .lb{display:block;font-weight:600;margin-bottom:6px}
+.req{color:var(--acc)}
+input[type=text],input[type=tel],input[type=email],textarea{width:100%;font:inherit;color:var(--fg);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px}
+textarea{min-height:92px;resize:vertical}
+input:focus,textarea:focus{outline:none;border-color:var(--acc)}
+.hint{font-size:.85rem;color:var(--mut);margin-top:4px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:500 .92rem var(--body);border:1.5px solid var(--line);background:var(--bg);color:var(--fg);border-radius:999px;padding:8px 15px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--acc);color:var(--accfg);border-color:var(--acc);font-weight:600}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:8px}
+.err{color:#d6336c;font-weight:600;margin-top:10px;min-height:1.4em}
+pre{white-space:pre-wrap;word-break:break-word;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:16px;font:400 .88rem/1.55 var(--body);max-height:420px;overflow:auto}
+.acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+footer{border-top:1.5px solid var(--line);padding:36px 0 48px;margin-top:20px}
+footer h3{font:800 1.5rem var(--disp);margin:0 0 6px;letter-spacing:-.02em}
+footer p{color:var(--mut);margin:0 0 16px}
+@media(prefers-reduced-motion:no-preference){.card{animation:in .35s ease}@keyframes in{from{opacity:0;transform:translateY(8px)}}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><span class="brand">Tech Labs</span><button class="btn" id="tg" type="button" aria-label="Switch between light and dark mode">Dark mode</button></header>
+<h1>Tell us about your business.<br>We’ll build the site around it.</h1>
+<p class="lead">Answer a few short questions about your business, your customers and the look you want. It takes about 10 minutes, and you can skip anything you’re unsure about.</p>
+<div class="rail" id="rail" aria-label="Progress"></div>
+<div class="meta" id="meta"></div>
+<div class="card" id="card"></div>
+
+<footer>
+<h3>Built by Tech Labs</h3>
+<p>Need a website for your group or business? Reach out, we’ll get you online.</p>
+<div class="acts" style="margin-top:0">
+<a class="btn pri" href="https://wa.me/233553550042" target="_blank" rel="noopener">WhatsApp</a>
+<a class="btn" href="tel:+233553550042">Call 0553550042</a>
+<a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=Accra,Ghana" target="_blank" rel="noopener">Find us on Maps</a>
+<a class="btn" href="https://www.linkedin.com/in/fawaaz-mahama-a799533a5" target="_blank" rel="noopener">LinkedIn</a>
+<a class="btn" href="https://www.tiktok.com/@hollow.gh" target="_blank" rel="noopener">TikTok</a>
+</div>
+</footer>
+</div>
+<script>
+var ind=["Shop / retail","Food & drink","Education","Health","Church / religious group","Student / campus group","Fashion & beauty","Real estate / construction","Tech / services","Non-profit","Other"];
+var S=[
+{t:"About you",d:"So we know who we’re talking to.",f:[
+{k:"name",l:"Your full name",r:1},{k:"role",l:"Your role in the business",ph:"Owner, manager, president…"},
+{k:"phone",l:"Phone / WhatsApp number",r:1,ty:"tel"},{k:"email",l:"Email address",ty:"email"},
+{k:"pref",l:"How should we contact you?",c:["WhatsApp","Phone call","Email"]}]},
+{t:"Your business",d:"The story we’ll tell on your website.",f:[
+{k:"biz",l:"Business or group name",r:1},
+{k:"what",l:"What do you do? Explain in one or two sentences.",ta:1,r:1},
+{k:"ind",l:"Which best describes your business?",c:ind},
+{k:"tag",l:"Do you have a slogan or tagline?",ph:"Leave empty if none"},
+{k:"since",l:"When did you start?"},
+{k:"aud",l:"Who are your customers?",ta:1,h:"Age, location, what they usually need from you."},
+{k:"svc",l:"List your main products or services",ta:1,h:"One per line. Add prices if you want them shown."},
+{k:"diff",l:"What makes you different from others?",ta:1}]},
+{t:"Location and contact",d:"What visitors will see on your Contact page.",f:[
+{k:"addr",l:"Business address or area",ta:1},
+{k:"map",l:"Google Maps link to your location",h:"Open your place in Google Maps, tap Share, and paste the link."},
+{k:"hrs",l:"Opening hours",ph:"Mon–Sat, 8am–6pm"},
+{k:"pub",l:"Contact details to show on the website",ta:1,h:"Phone, WhatsApp, email."},
+{k:"soc",l:"Social media links",ta:1,h:"Facebook, Instagram, TikTok, YouTube, X…"}]},
+{t:"Goals and pages",d:"What the website must do for you.",f:[
+{k:"goal",l:"What is the main goal of the website?",c:["Get more customers","Show our work","Sell online","Take bookings","Share information","Look more professional"]},
+{k:"pages",l:"Which pages do you need?",m:1,c:["Home","About","Services","Products / Shop","Gallery","Blog / News","Events","Team","Testimonials","FAQ","Contact"]},
+{k:"feat",l:"Which features do you want?",m:1,c:["WhatsApp chat button","Contact form","Online booking","Online payments","Google Maps","Social media feed","Newsletter sign-up","Admin dashboard","Member login","Multiple languages"]},
+{k:"like",l:"Any websites you like, or competitors we should look at?",ta:1,h:"Paste links and tell us what you like about them."}]},
+{t:"Look and feel",d:"Your brand, colours and style.",f:[
+{k:"logo",l:"Do you have a logo?",c:["Yes, I have one","No, I need one","Not sure"]},
+{k:"col",l:"Brand colours",ph:"Green and gold, or any hex codes"},
+{k:"sty",l:"Which styles fit you?",m:1,c:["Bold and dramatic","Clean and minimal","Playful","Professional","Elegant and luxury","Modern and techy","Warm and friendly"]},
+{k:"cont",l:"Is your website content ready?",c:["Yes, all ready","Partly ready","I need help writing it"]},
+{k:"med",l:"Photos and videos",c:["I have my own","I need photos taken","Use stock images"]}]},
+{t:"Timeline and budget",d:"Last step before you send.",f:[
+{k:"dom",l:"Do you have a domain name?",c:["Yes","No, I need one","Not sure"]},
+{k:"domn",l:"Domain name you want or already own",ph:"www.yourbusiness.com"},
+{k:"when",l:"When do you need the website ready?"},
+{k:"bud",l:"Your budget range",c:["Under GH₵1,000","GH₵1,000–3,000","GH₵3,000–8,000","GH₵8,000+","Let’s discuss"]},
+{k:"upd",l:"Will you need updates after launch?",c:["Yes, monthly","One-time build only","Not sure"]},
+{k:"more",l:"Anything else we should know?",ta:1}]},
+{t:"Review and send",d:"Check your answers, then send them to Tech Labs.",rev:1}
+];
+var v={},i=0,card=document.getElementById("card"),rail=document.getElementById("rail");
+function esc(s){return s.replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function summary(){var o="Website questionnaire for Tech Labs\n";S.forEach(function(s){if(s.rev)return;var l=[];s.f.forEach(function(f){var x=v[f.k];if(x&&x.length)l.push(f.l+"\n"+(Array.isArray(x)?x.join(", "):x))});if(l.length)o+="\n== "+s.t+" ==\n"+l.join("\n\n")+"\n"});return o}
+function draw(){
+rail.innerHTML="";S.forEach(function(s,n){var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Go to "+s.t);b.className=n<i?"done":n==i?"on":"";b.onclick=function(){if(n<=i){i=n;draw()}};rail.appendChild(b)});
+document.getElementById("meta").textContent="Step "+(i+1)+" of "+S.length;
+var s=S[i],h='<h2>'+s.t+'</h2><p class="desc">'+s.d+'</p>';
+if(s.rev){h+='<pre id="sum">'+esc(summary())+'</pre><div class="acts"><button class="btn pri" id="wa" type="button">Send on WhatsApp</button><button class="btn" id="em" type="button">Send by email</button><button class="btn" id="cp" type="button">Copy answers</button></div><div class="err" id="err" role="status"></div><div class="nav"><button class="btn" id="bk" type="button">Back</button></div>'}
+else{s.f.forEach(function(f){var id="f_"+f.k;h+='<div class="f">';
+if(f.c){h+='<span class="lb" id="l_'+f.k+'">'+f.l+'</span><div class="chips" role="group" aria-labelledby="l_'+f.k+'">'+f.c.map(function(c){var on=f.m?(v[f.k]||[]).indexOf(c)>-1:v[f.k]===c;return'<button type="button" class="chip" aria-pressed="'+on+'" data-k="'+f.k+'" data-m="'+(f.m?1:0)+'">'+esc(c)+'</button>'}).join("")+'</div>'}
+else{h+='<label for="'+id+'">'+f.l+(f.r?' <span class="req" aria-hidden="true">*</span>':'')+'</label>';
+var val=esc(v[f.k]||"");
+h+=f.ta?'<textarea id="'+id+'" data-k="'+f.k+'">'+val+'</textarea>':'<input id="'+id+'" data-k="'+f.k+'" type="'+(f.ty||"text")+'" value="'+val+'" placeholder="'+esc(f.ph||"")+'">'}
+if(f.h)h+='<div class="hint">'+f.h+'</div>';h+='</div>'});
+h+='<div class="err" id="err" role="alert"></div><div class="nav">'+(i?'<button class="btn" id="bk" type="button">Back</button>':'<span></span>')+'<button class="btn pri" id="nx" type="button">Next</button></div>'}
+card.innerHTML=h;
+card.querySelectorAll("input,textarea").forEach(function(e){e.oninput=function(){v[e.dataset.k]=e.value}});
+card.querySelectorAll(".chip").forEach(function(b){b.onclick=function(){var k=b.dataset.k,x=b.textContent;if(b.dataset.m=="1"){var a=v[k]||[],p=a.indexOf(x);p>-1?a.splice(p,1):a.push(x);v[k]=a}else{v[k]=v[k]===x?"":x}draw();var n=card.querySelector('.chip[data-k="'+k+'"]');}});
+var bk=document.getElementById("bk");if(bk)bk.onclick=function(){i--;draw();top_()};
+var nx=document.getElementById("nx");if(nx)nx.onclick=function(){var bad=S[i].f.filter(function(f){return f.r&&!(v[f.k]||"").trim()});if(bad.length){document.getElementById("err").textContent="Please fill in: "+bad.map(function(f){return f.l}).join(", ")+".";return}i++;draw();top_()};
+if(s.rev){var t=summary(),err=document.getElementById("err");
+document.getElementById("wa").onclick=function(){window.open("https://wa.me/233553550042?text="+encodeURIComponent(t),"_blank")};
+document.getElementById("em").onclick=function(){location.href="mailto:fawaazmahama@gmail.com?subject="+encodeURIComponent("Website questionnaire: "+(v.biz||"New client"))+"&body="+encodeURIComponent(t)};
+document.getElementById("cp").onclick=function(){var ok=function(){err.textContent="Answers copied. Paste them in a message to Tech Labs."};try{navigator.clipboard.writeText(t).then(ok,function(){err.textContent="Copy failed. Select the text above and copy it."})}catch(e){err.textContent="Copy failed. Select the text above and copy it."}}}
+}
+function top_(){document.querySelector(".meta").scrollIntoView({behavior:"smooth",block:"start"})}
+var tg=document.getElementById("tg"),root=document.documentElement;
+function dark(){var t=root.getAttribute("data-theme");return t?t=="dark":matchMedia("(prefers-color-scheme: dark)").matches}
+function lab(){tg.textContent=dark()?"Light mode":"Dark mode"}
+tg.onclick=function(){root.setAttribute("data-theme",dark()?"light":"dark");lab()};lab();
+draw();
+</script>
+</body>
+</html>
